@@ -1,0 +1,19 @@
+/*
+링크 : https://school.programmers.co.kr/learn/courses/30/lessons/144854
+
+[JOIN 에서 WHERE 과 ON 의 차이]
+•WHERE로 풀어도 상관 없지만, 
+ JOIN 후에 WHERE 문으로 조건을 걸면 데이터가 많아졌을 때, 불필요한 데이터도 조인이 들어가고 연산이 늦어짐.
+
+•그래서 CATEGORY가 경제일 경우만 조인하고 싶다면, WHERE 보다는 ON 조건을 거는게 낫겠다고 생각함.
+• ON : JOIN을 하기 전 필터링
+  WHERE : JOIN을 한 후 필터링
+*/
+
+SELECT BOOK_ID, AUTHOR_NAME, DATE_FORMAT(PUBLISHED_DATE, '%Y-%m-%d') as PUBLISHED_DATE
+
+FROM BOOK AS b
+INNER JOIN AUTHOR AS a
+ON b.CATEGORY = '경제' and b.AUTHOR_ID = a.AUTHOR_ID
+
+ORDER BY PUBLISHED_DATE;
