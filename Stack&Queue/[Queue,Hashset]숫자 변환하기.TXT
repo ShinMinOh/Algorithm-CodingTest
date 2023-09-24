@@ -1,0 +1,43 @@
+// https://school.programmers.co.kr/learn/courses/30/lessons/154538?language=java
+
+import java.util.*;
+
+class Solution {
+    public int solution(int x, int y, int n) {
+        Queue<int []> que = new LinkedList<>();
+        HashSet<Integer> distinct = new HashSet<>();	//queue를 이용할때 중복문제로 시간초과해결하기 위해 중복제거하는 HashSet사용
+        
+        que.add(new int[]{x,0});
+        
+        while(!que.isEmpty()){
+            int[] tmp = que.poll();
+            int num = tmp[0];
+            int cnt = tmp[1];
+            
+            if(num > y){
+                continue;
+            }
+            
+            if(num == y){
+                return cnt;
+            }
+            else{
+                cnt++;
+                if(!distinct.contains(num+n)){
+                    distinct.add(num+n);
+                    que.add(new int[]{num+n,cnt});
+                }
+                if(!distinct.contains(num * 2)){
+                    distinct.add(num * 2);
+                    que.add(new int[]{num * 2,cnt});
+                }
+                if(!distinct.contains(num * 3)){
+                    distinct.add(num * 3);
+                    que.add(new int[]{num * 3,cnt});
+                }
+            }
+        }
+        
+            return -1;
+    }
+}
