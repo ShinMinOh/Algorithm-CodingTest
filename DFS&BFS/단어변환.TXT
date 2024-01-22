@@ -1,0 +1,39 @@
+/*
+1. 방문여부를 체크할 배열 생성.
+*/
+class Solution {
+    boolean[] visited;
+    int answer = 0;
+    public int solution(String begin, String target, String[] words) {
+        visited = new boolean[words.length];
+        
+        dfs(begin, target, words, 0);
+        
+        return answer;
+    }
+    
+    public void dfs(String begin, String target, String[] words, int count){
+        if(begin.equals(target)){
+            answer = count;
+            return;
+        }
+        
+        for(int i=0; i<words.length; i++){
+            if(visited[i]){
+                continue;   //방문했을경우 건너뜀.
+            }
+            
+            int check = 0;
+            for(int j=0; j< begin.length(); j++){ //begin과 words중 한개원소 비교
+                if(begin.charAt(j) == words[i].charAt(j)){check++;}
+            }
+            
+                if(check == begin.length()-1){  //words중 한글자만 begin과 다를경우
+                    visited[i] = true;
+                    dfs(words[i], target, words, count+1);
+                    visited[i] = false;         //백트래킹
+                }
+        }
+        
+    }
+}
