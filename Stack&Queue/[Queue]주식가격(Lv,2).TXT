@@ -1,0 +1,28 @@
+import java.util.*;
+class Solution {
+    public int[] solution(int[] prices) {
+        int[] answer = new int[prices.length];
+        Queue<Integer> countQ = new LinkedList<>();
+        
+        for(int price:prices){
+            countQ.offer(price);
+        }
+        
+        int num = 0;
+        while(countQ.peek() != null){
+            int value = countQ.poll();
+            
+            answer[num] = 0;
+            
+            for(Integer integer : countQ ){
+                answer[num]++;
+                if(value > integer){    //가격이 떨어질경우
+                    break;
+                }
+            }
+            
+            num++;
+        }
+        return answer;
+    }
+}
