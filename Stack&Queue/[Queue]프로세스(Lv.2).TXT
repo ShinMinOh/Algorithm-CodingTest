@@ -1,0 +1,33 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/42587
+
+import java.util.*;
+class Solution {
+    public int solution(int[] priorities, int location) {
+        int answer = 0;        
+        Queue<Integer> proqueue = new LinkedList<>();		// priorities 저장할 큐
+        Queue<Integer> orderqueue = new LinkedList<>();	// priorities의 index 저장할 큐
+        List<Integer> order = new ArrayList<>();			// 종료된 프로세스의 인덱스를 차례로 저장할 리스트
+        
+        for(int i=0;i<priorities.length;i++){
+            proqueue.add(priorities[i]);
+            orderqueue.add(i);
+        }
+        
+        while(proqueue.peek() != null){
+            int provalue = proqueue.poll();
+            int ordervalue = orderqueue.poll();
+            
+            if(proqueue.stream().filter(num -> provalue < num).toArray().length == 0){
+                //poll해서 뽑은 숫자보다 큰수가 있는지 순회하면서 찾고 없으면 그 수의 index를 order에 저장
+                order.add(ordervalue);
+            }else{
+                // 다시 queue에 집어넣음
+                proqueue.add(provalue);
+                orderqueue.add(ordervalue);
+            }
+        }
+        
+        
+        return order.indexOf(location)+1;   // 몇 번째인지 물었으므로 0부터가아닌 1부터 세야하므로 +1
+    }
+}

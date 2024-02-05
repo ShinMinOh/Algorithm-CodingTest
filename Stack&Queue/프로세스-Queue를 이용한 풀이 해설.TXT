@@ -1,0 +1,15 @@
+// 오래 걸린 점
+
+filter로 걸러진 원소들로 배열로 만들어 길이를 알고 싶었는데, filter( ).collect(Collectors.toList( ))라 써서 오류가 났었음.
+(Stream에서 작업한 내용을 List로 반환할 때 사용한다.)
+
+
+ Queue<Integer> proqueue = new LinkedList<>();
+ Queue<Integer> orderqueue = new LinkedList<>();
+ List<Integer> order = new ArrayList<>();
+
+order.stream().filter(num -> provalue < num).toArray().length == 0  			-> 문법 오류 x
+proqueue.stream().filter(num -> provalue < num).toArray().length == 0   			-> 문법 오류 x
+proqueue.stream().filter(num -> provalue < num).collect(Collectors.toList()).length == 0	-> 문법 오류 o
+
+Queue든 List든 stream( ).filter( )를 이용해서 배열로 만들고 싶을때는, " .toArray( ) "를 사용하자
