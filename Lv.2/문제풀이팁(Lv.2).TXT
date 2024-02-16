@@ -4,3 +4,32 @@
 
 2. 단어 전체에서 특정단어를 포함하는지 확인해야 하는 문제
 ->contains( ) 사용
+
+<해시 문제>
+HashMap의 가장 큰 특징은 key-value 구조이며 key값은 중복이 불가능하다.
+
+--> 따라서 같은 키값 아래 value가 여러개인 구조로 문제를 풀어야 할때, 아래 코드와 같이
+     getOrDefault( )메서드를 통해 해당 key값에 대한 value값이 없을경우 default로 0을 반환해서 +1을 시키고,
+     있을경우 value값을 가져와 +1을 통해 요소의 개수를 늘려주는 방식으로 풀도록 한다.
+
+class Solution {
+    public int solution(String[][] clothes) {
+        int answer = 1;
+        HashMap<String,Integer> wear = new HashMap<String,Integer>();
+        
+        for(String[] clothe : clothes){
+            String type = clothe[1];
+            wear.put(type,wear.getOrDefault(type,0)+1);
+        }
+        
+        System.out.println(wear.size());
+        Iterator<Integer> iterator = wear.values().iterator();
+        
+        while(iterator.hasNext()){
+            Integer value = iterator.next();    // case 1: 1 2
+            answer = answer*(value+1);
+        }
+        
+        return answer-1;
+    }
+}
