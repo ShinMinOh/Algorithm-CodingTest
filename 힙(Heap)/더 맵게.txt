@@ -1,4 +1,9 @@
-public int solution(int[] scoville, int K) {
+//https://school.programmers.co.kr/learn/courses/30/lessons/42626
+import java.util.PriorityQueue;
+// 순차적으로 추가/삭제하는 경우 ArrayList가 LinkedList보다 빠르다.
+// 중간 데이터(비 순차적)를 추가/삭제하는 경우 LinkedList가 ArrayList보다 빠르다.
+class Solution {
+   public int solution(int[] scoville, int K) {
    int answer = 0;
 
    PriorityQueue<Integer> heap = new PriorityQueue<>();
@@ -17,4 +22,6 @@ public int solution(int[] scoville, int K) {
    }
 
    return answer;
+}
+    
 }
