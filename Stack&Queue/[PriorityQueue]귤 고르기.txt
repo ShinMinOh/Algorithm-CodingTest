@@ -1,0 +1,33 @@
+https://school.programmers.co.kr/learn/courses/30/lessons/138476
+import java.util.*;
+class Solution {
+    public int solution(int k, int[] tangerine) {
+        int answer = 0;
+        int count = 0;
+        PriorityQueue<Integer> box = new PriorityQueue<>(Collections.reverseOrder());
+        
+        Arrays.sort(tangerine);
+        
+        int selection = tangerine[0];
+        for(int i:tangerine){
+           if(selection == i){
+               count++;
+           }else{
+               box.add(count);
+               selection = i;
+               count = 1;   // 귤 종류가 바뀌므로 count 초기화 필요
+           }
+        }
+        
+        box.add(count);
+        
+        while(k>0){
+        int pick = box.poll();
+        k = k - pick;
+        answer++;
+        }
+        
+        //System.out.println(box);
+        return answer;
+    }
+}
