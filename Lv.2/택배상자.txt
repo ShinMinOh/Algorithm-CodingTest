@@ -1,0 +1,28 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/131704
+import java.util.*;
+class Solution {
+    public int solution(int[] order) {
+        int answer = 0;
+        int cnt = 0;
+        
+        Stack<Integer> belt = new Stack<>();        // 보조 컨테이너 벨트
+        Queue<Integer> truck = new LinkedList<>();   //트럭에 실은 상자
+        
+        for(int i=0;i<order.length;i++){
+            belt.add(i+1);
+            
+            while(!belt.isEmpty()){
+                if(belt.peek() == order[cnt]){
+                    truck.offer(belt.pop());        // 보조 벨트에 있는 상자 빼서 트럭에 실음
+                    cnt++;                      //order의 인덱스 하나 올림
+                }else{break;}
+            }
+            
+        }
+        //System.out.println("belt: "+belt.toString());
+        //System.out.println("originalBelt: "+truck.toString());
+
+        answer = truck.size();
+        return answer;
+    }
+}
