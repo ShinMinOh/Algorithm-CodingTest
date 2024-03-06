@@ -1,0 +1,92 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/159993
+import java.util.*;
+class Node{
+    int x;
+    int y;
+    int count;
+    
+    public Node(int x, int y, int count){   
+        this.x = x;
+        this.y = y;
+        this.count = count;
+    }
+}
+
+
+class Solution {
+    int[] X = {0,0,-1,1};
+    int[] Y = {1,-1,0,0};
+    
+    //
+    public int solution(String[] maps) {
+        int[] start = getStartPosition('S',maps);   // 시작(S) 지점의 좌표 반환
+        int[] lever = getStartPosition('L',maps);   // 레버(L) 지점의 좌표 반환
+        
+        int leverCount = bfs('L', start, maps);   //bfs(목적지(레버), 출발지(시작지점), 맵)
+        if(leverCount == 0){
+            return -1;
+        }
+        
+        int exitCount = bfs('E', lever, maps);    //bfs(목적지(출구), 출발지(레버), 맵)
+        if(exitCount == 0){
+            return -1;
+        }
+        
+        return leverCount+exitCount;
+    }
+    
+    //
+    private int bfs(char find, int[] start, String[] maps){
+        Queue<Node> q = new LinkedList<>();
+        q.offer(new Node(start[0], start[1], 0));   // 출발지 Node(x좌표,y좌표,count)
+            
+        boolean[][] visited = new boolean[maps.length][maps[0].length()];
+        visited[start[0]][start[1]] = true;         // 처음 출발지점 방문처리 true
+        
+        int answer = 0;
+        
+        while(!q.isEmpty()){
+            Node cur = q.poll();
+            
+            if(maps[cur.x].charAt(cur.y)  == find){
+                if(answer == 0){
+                    answer = cur.count;
+                }else{
+                    answer = Math.min(answer, cur.count);   //answer에 저장된 값과 현재 count값중 최소값을 answer에 저장
+                }
+            }
+            
+            for(int i=0;i<4;i++){
+                //상하좌우 4번 탐색
+                int x = cur.x + X[i];   
+                int y = cur.y + Y[i];
+                
+                // 현재 x,y좌표가 음수 or map길이 이상 or 벽 or 방문한 좌표일 경우 건너뜀.
+                if(x<0 || y<0 || x>=maps.length || y>=maps[0].length()
+                  || maps[x].charAt(y) == 'X' || visited[x][y]){    
+                    continue;
+                }
+                
+                //위의 예외상황이 아닐 경우 현재 좌표를 방문처리 해주고, 1칸 이동했으므로 cur.count를 +1 해준다
+                visited[x][y] = true;
+                q.offer(new Node(x, y, cur.count+1));
+            }
+        }
+        
+        return answer;
+    }
+    
+    //
+    private int[] getStartPosition(char find, String[] maps){  // find(목적지)의 좌표반환
+        for(int i=0;i<maps.length;i++){
+            for(int j=0;j<maps[i].length();j++){
+                if(maps[i].charAt(j) == find){
+                    return new int[]{i,j};
+                }
+            }
+        }
+        return null;    //찾고자 하는 목적지가 없을경우 null 반환
+    }
+    
+    
+}
