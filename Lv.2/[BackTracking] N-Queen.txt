@@ -1,0 +1,38 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/12952
+import java.util.*;
+class Solution {
+    private int[] board;
+    private int answer;
+    public int solution(int n) {
+        board = new int[n];
+        
+        backTracking(0,n);
+        
+        return answer;
+    }
+    
+    // depth : 행을 의미
+    private void backTracking(int depth, int n){ // depth = 0, 1, 2 ... n
+        if(depth == n){                         // depth(행)이 끝 행에 다다랐을 경우 모두 배치가 끝난것이므로 answer+1
+            answer++;
+            return;
+        }
+        for(int i=0;i<n;i++){                   // i : 열
+            board[depth] = i;                   // 해당 depth(행)과 i(열)에 퀸을 놓을 수 있는지 확인
+            
+            if(valid(depth)){
+                backTracking(depth+1, n);
+            }
+        }
+    }
+    
+    private boolean valid(int i){ // i : 행(depth)
+        for(int j=0;j<i;j++){
+            if(board[i] == board[j]){ return false;}            // 기존 Q의 위치와 새로운 Q의 위치가 직선상에 놓일경우
+            if(Math.abs(i-j) == Math.abs(board[i] - board[j])){ // 기존 Q의 위치와 새로운 Q의 위치가 대각선상에 놓일경우
+                return false;
+            }
+        }
+            return true;
+    }
+    }
