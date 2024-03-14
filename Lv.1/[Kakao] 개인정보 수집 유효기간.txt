@@ -1,0 +1,35 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/150370
+import java.util.*;
+class Solution {
+    public List<Integer> solution(String today, String[] terms, String[] privacies) {
+        List<Integer> answer = new ArrayList<>();
+        HashMap<String,Integer> map = new HashMap<>();
+        
+        // 1. 오늘 날짜 기준으로 년,월,일을 모두 하나로 더함. 꼭 년/월/일 형식을 지키지 않아도 됨!!
+        String[] td = today.split("[.]");
+        int privacyDate = (Integer.parseInt(td[0])*12*28) + (Integer.parseInt(td[1])*28)
+                                + Integer.parseInt(td[2]);
+        
+        // 2. map으로 terms를 keu-value 형태로 저장
+        for(String t : terms){
+            String[] tm = t.split(" ");
+            map.put(tm[0],Integer.parseInt(tm[1]));
+        }
+        
+        for(int i=0;i<privacies.length;i++){
+            String[] priv = privacies[i].split(" ");
+            
+            String[] prDate = priv[0].split("[.]");     // 수집된 날짜 .로 split
+            String term = priv[1];                      //String타입 약관
+            
+            int deadLine = (Integer.parseInt(prDate[0])*12*28) + (Integer.parseInt(prDate[1])*28)
+                                + Integer.parseInt(prDate[2]) + (map.get(term)*28);        // 가입날짜 + 약관 유효기간(map)
+                
+            if(privacyDate >= deadLine){ //약관유효기간(deadLine)이 현재날짜(privacyDate)보다 작거나 같으면 개인정보 파기
+                answer.add(i+1);
+            }
+        }
+        return answer;
+        //return answer.stream().mapToInt(integer -> integer).toArray(); -> 반환타입을 int[]로 할 경우
+    }
+}
