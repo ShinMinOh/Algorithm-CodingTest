@@ -1,0 +1,41 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/258712
+import java.util.*;
+class Solution {
+    public int solution(String[] friends, String[] gifts) {
+        int answer = 0;
+        HashMap<String,Integer> map = new HashMap<>(); 
+        int[] giveDegree = new int[friends.length];     // 선물 지수
+        int[][] giftGraph = new int[friends.length][friends.length];
+        
+        for(int i=0;i<friends.length;i++){
+            map.put(friends[i],i);
+        }
+        
+        for(String gift : gifts){
+            String[] name = gift.split(" ");
+            giveDegree[map.get(name[0])]++;
+            giveDegree[map.get(name[1])]--;
+            giftGraph[map.get(name[0])][map.get(name[1])]++;
+        }
+        
+        for(int i=0;i<friends.length;i++){
+            int num = 0;
+            for(int j=0;j<friends.length;j++){
+                if(i==j){
+                    continue;
+                }
+                
+                if(giftGraph[i][j] > giftGraph[j][i] || 
+                  (giftGraph[i][j] == giftGraph[j][i] && giveDegree[i] > giveDegree[j])){
+                    num++;
+                }
+            }
+            if(answer < num){
+                answer = num;
+            }
+        }
+        
+        
+        return answer;
+    }
+}
