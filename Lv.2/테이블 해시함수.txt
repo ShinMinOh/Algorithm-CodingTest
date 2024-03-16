@@ -1,0 +1,45 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/147354
+import java.util.*;
+class Solution {
+    public int solution(int[][] data, int col, int row_begin, int row_end) {
+        
+       //튜플의 col 번째 컬럼값 기준으로 오름차순 정렬하되, 값이 동일하면 첫번째 컬럼값 기준으로 내림차순
+        Arrays.sort(data, (a,b) -> {
+            if(a[col-1] == b[col-1]){
+                return b[0]-a[0];  // 내림차순
+            }
+            else{
+                return a[col-1]-b[col-1];
+            }
+        });
+        
+        List<Integer> modResult = getModResult(data, row_begin, row_end);
+        
+        return getXor(modResult);
+        
+    }
+    
+    private static List<Integer> getModResult(int[][] data, int row_begin, int row_end){
+        List<Integer> result = new ArrayList<>();
+        
+        for(int i=row_begin;i<=row_end;i++){    
+            int sum = 0;
+            for(int j=0;j<data[0].length;j++){
+                sum += data[i-1][j] % i;        //row_begin은 ~번째 이므로 data의 인덱스로쓰려면 -1 해야함
+            }
+            result.add(sum);
+        }
+        return result;
+    }
+    
+    private static int getXor(List<Integer> modResult){
+        int hashValue = 0;
+        
+        for(int i=0;i<modResult.size();i++){
+           hashValue ^= modResult.get(i);
+        }
+        return hashValue;   
+    }
+    
+    
+}
