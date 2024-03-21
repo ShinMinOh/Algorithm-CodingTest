@@ -1,0 +1,26 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/133499
+class Solution {
+    public int solution(String[] babbling) {
+        int answer = 0;
+        
+        for(int i=0;i<babbling.length;i++){ // 연속된 발음일 경우 skip
+            if(babbling[i].contains("ayaaya") || babbling[i].contains("yeye") 
+               ||babbling[i].contains("woowoo") || babbling[i].contains("mama")){
+                continue;
+            }
+            
+            // 공백한칸으로 바꾸는 이유는 mayaa에서 aya를  ""로 치환할 경우 ma가 되서 정답으로 카운트되기 때문에
+            babbling[i] = babbling[i].replace("aya"," ");
+            babbling[i] = babbling[i].replace("ye"," ");
+            babbling[i] = babbling[i].replace("woo"," ");
+            babbling[i] = babbling[i].replace("ma"," ");
+            
+            // 몇개의 조합일지 모르므로 공백들을 다 없앤후, 길이를 0으로 만듬.
+            babbling[i] = babbling[i].replace(" ","");  
+
+            if(babbling[i].length() == 0){ answer++;}
+            
+        }
+        return answer;
+    }
+}
