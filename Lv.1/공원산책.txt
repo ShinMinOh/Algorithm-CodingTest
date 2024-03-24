@@ -1,0 +1,54 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/172928
+class Solution {
+    public int[] solution(String[] park, String[] routes) {
+        int sx = 0; // 이동 후 x좌표
+        int sy = 0; // 이동 후 y좌표
+        
+        char[][] arr = new char[park.length][park[0].length()];
+        
+        for(int i=0;i<park.length;i++){
+            arr[i]=park[i].toCharArray();   // String -> char 쪼개서 넣음. arr[0]안에 arr[0][i]위치에 넣음.
+            
+            if(park[i].contains("S")){
+                sy = i;
+                sx=park[i].indexOf("S");
+            }
+        }
+        
+        for(String r : routes){
+            String dir = r.split(" ")[0];
+            int len = Integer.valueOf(r.split(" ")[1]);
+
+            int nx = sx;
+            int ny = sy;
+            
+            for(int i=0;i<len;i++){
+                if(dir.equals("E")){    //동
+                    nx++;
+                }
+                if(dir.equals("W")){    //서
+                    nx--;
+                }
+                if(dir.equals("S")){
+                    ny++;
+                }
+                if(dir.equals("N")){
+                    ny--;
+                }
+                if(nx>=0 && ny>=0 && nx<arr[0].length && ny<arr.length){
+                    if(arr[ny][nx] == 'X'){
+                        break;
+                    }
+                    if(i==len-1){
+                        sx = nx;
+                        sy = ny;
+                    }
+                }
+            }
+        }
+        
+        int[] answer = {sy, sx};
+       
+        return answer;
+    }
+}
