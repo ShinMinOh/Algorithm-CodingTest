@@ -1,0 +1,23 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/42885
+import java.util.*;
+class Solution {
+    public int solution(int[] people, int limit) {
+        int n=people.length;
+        int start = 0;
+        int end = n-1;
+        
+        Arrays.sort(people);
+        
+        while(end > start){
+            if(people[start]+people[end]<=limit){
+                start++;
+                end--;
+            }
+            else{
+                end--;
+            }
+        }
+        int answer = n-start;   //start의 개수가 2명이 한배에 탄 경우의 수이므로. 나머지는 각배임.
+        return answer; 
+    }
+}
