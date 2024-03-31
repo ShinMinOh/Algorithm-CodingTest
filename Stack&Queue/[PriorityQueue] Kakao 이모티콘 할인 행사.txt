@@ -1,0 +1,53 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/150368#qna
+import java.util.*;
+class Solution {
+    int[] sales = {10, 20, 30, 40};   // 할인율
+    int[] num;                        // 순열 저장
+    PriorityQueue<int[]> pq;     
+    public int[] solution(int[][] users, int[] emoticons) {
+        num = new int[emoticons.length];
+        
+        pq = new PriorityQueue<>(new Comparator<int[]>() { //// 우선순위 큐 정렬조건 설정
+            // 가입자 내림차순 -> 구매 비용 내림차순
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] == o2[0] ? o2[1] - o1[1] : o2[0] - o1[0];
+            }
+        });
+        // 할인율 중복순열
+        dfs(users, emoticons, 0);
+        
+        
+        return pq.poll();
+    }
+    
+    public void dfs(int[][] users, int[] emoticons, int level){
+        if(level == num.length){    // 종료조건
+            int service = 0;    // 서비스 가입자
+            int money = 0;      // 판매 비용
+            
+            for(int i=0; i<users.length; i++){
+                int sum=0;
+                for(int e=0; e<emoticons.length; e++){
+                    if(num[e] >= users[i][0]){
+                        sum += emoticons[e] * (100-num[e])/100; //할인율 적용
+                    }
+                }
+                // 구매 비용이 기준 이상일 경우
+                if(sum >=users[i][1]){service++;}   // 서비스 가입
+                else{money += sum;}                 // 기준을 넘지 않으면 구매
+            }
+            
+            //결과 pq에 대입
+            pq.offer(new int[]{service, money});
+            return;
+        }
+        
+        for(int i=0;i<sales.length;i++){   //num에 할인률 4가지 넣기
+            num[level] = sales[i];
+            dfs(users, emoticons, level+1);
+            
+        }
+    }
+}
+
