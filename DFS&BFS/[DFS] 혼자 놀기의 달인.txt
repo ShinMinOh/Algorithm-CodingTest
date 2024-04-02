@@ -1,0 +1,36 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/131130
+import java.util.*;
+class Solution {
+    boolean[] visited;
+    int depth;
+    public int solution(int[] cards) {
+        int answer = 0;
+        int len = cards.length;
+        List<Integer> linkSum = new ArrayList<>();  // 그룹에 속한 상자들의 합
+        visited = new boolean[len+1];
+        
+        for(int i=0;i<len;i++){
+            if(!visited[i+1]){
+            depth=1;
+            visited[i+1] = true;
+            
+            dfs(cards[i], cards);
+            linkSum.add(depth);
+            }
+        }
+           if(linkSum.size()<2) {   // 상자 그룹이 1개밖에 없으면 점수는 0점.
+            return 0;
+        }
+        
+        Collections.sort(linkSum,Collections.reverseOrder());
+        answer = linkSum.get(0)*linkSum.get(1);
+        return answer;
+    }
+    private void dfs(int x, int[] cards){
+        if(!visited[x]){
+            visited[x] = true;
+            depth += 1;
+            dfs(cards[x-1], cards);
+        }
+    }
+}
