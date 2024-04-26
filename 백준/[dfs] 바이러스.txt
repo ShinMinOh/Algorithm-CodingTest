@@ -1,0 +1,42 @@
+//https://www.acmicpc.net/problem/2606
+import java.util.Scanner;
+public class Main {
+  static int n,connection,start;
+  static boolean visited[];
+  static int map[][];
+  static int count = 0;
+
+  public static void main(String[] args){
+
+    Scanner scan = new Scanner(System.in);
+    n = scan.nextInt();  // 컴퓨터 수
+    connection = scan.nextInt(); // 연결된 컴퓨터 쌍의 수
+
+    start = 1;  //탐색 시작할 정점 번호
+    map = new int[n+1][n+1];
+    visited = new boolean[n+1];
+    
+    for(int i=0;i<connection;i++){
+      int a = scan.nextInt();
+      int b = scan.nextInt();
+      map[a][b]=map[b][a]=1;  // 연결돼 있을 경우 1로 셋팅
+    }
+
+    int count = dfs(start);
+    System.out.println(count);
+    scan.close();
+  }
+
+  public static int dfs(int i){
+    visited[i] = true;
+
+    for(int j=0;j<=n;j++){
+      if(map[i][j]==1 && !visited[j]){
+        count++;
+        dfs(j);
+      }
+    }
+    return count;
+  }
+
+}
