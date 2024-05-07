@@ -1,0 +1,72 @@
+//https://www.acmicpc.net/problem/21736
+import java.util.Scanner;
+public class Main {
+  static int N;
+  static int M;
+  static char[][] campus;
+  static boolean[][] visited;
+  static int[] dx = {-1,1,0,0};
+  static int[] dy = {0,0,-1,1};
+  static int result = 0;
+  public static void main(String[] args){
+
+    Scanner sc = new Scanner(System.in);
+    N = sc.nextInt(); //캠퍼스 가로
+    M = sc.nextInt(); //캠퍼스 세로
+
+    campus = new char[N][M];
+    visited = new boolean[N][M];
+
+    //도연이 위치 저장변수
+    int r = 0;
+    int c = 0;
+
+    for(int i=0;i<N;i++){
+      String s = sc.next();
+      for(int j=0;j<M;j++){
+        campus[i][j] = s.charAt(j);
+
+        // 도연이 위치 저장
+        if(campus[i][j] == 'I'){
+          r = i;
+          c = j;
+        }
+      }
+    }
+
+    DFS(r,c);
+
+    if (result == 0) {
+      System.out.println("TT");
+    } else {
+      System.out.println(result);
+    }
+
+
+  }
+
+  private static void DFS(int x, int y) {
+    // 1. 방문 좌표를 'true'로 방문처리
+    visited[x][y] = true;
+
+    // 2. 방문한 좌표에 사람이 있을 경우 +1
+    if(campus[x][y] == 'P'){
+      result++;
+    }
+
+    // 3. 상하좌우 이동
+    for(int i=0;i<4;i++){
+      int nx = x + dx[i];
+      int ny = y + dy[i];
+
+      if(nx>=0 && ny>=0 && nx<N && ny<M && !visited[nx][ny]){
+        // 벽이 아닐경우 상하좌우 탐색하면서 반복
+        if(campus[nx][ny] != 'X'){
+          DFS(nx,ny);
+        }
+      }
+    }
+  }
+
+
+}
