@@ -1,0 +1,23 @@
+// https://leetcode.com/problems/smallest-number-in-infinite-set/
+class SmallestInfiniteSet {
+
+    PriorityQueue<Integer> queue;
+    int i = 1;
+
+    public SmallestInfiniteSet() {  // 모든 양의 정수를 포함하도록 초기화
+        queue = new PriorityQueue<>();
+    }
+    
+    public int popSmallest() {
+        if(queue.size() == 0){
+            return i++;
+        }
+        return queue.poll();
+    }
+    
+    public void addBack(int num) {
+        if(num < i && !queue.contains(num)){
+            queue.add(num);
+        }
+    }
+}
