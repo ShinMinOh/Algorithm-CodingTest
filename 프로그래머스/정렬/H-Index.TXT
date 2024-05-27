@@ -1,0 +1,37 @@
+/*
+
+우선 Arrays.sort 함수를 이용해 citations 배열을 정렬하게 되면 특정 인덱스 i부터 citations배열의 길이까지 만큼의 논문이 citations[i]번 만큼 인용되었다고 할 수 있다
+
+0	1	3	5	6	0회 이상 인용된 논문이 5편
+0	1	3	5	6	1회 이상 인용된 논문이 4편
+0	1	3	5	6	3회 이상 인용된 논문이 3편
+0	1	3	5	6	5회 이상 인용된 논문이 2편
+0	1	3	5	6	6회 이상 인용된 논문이 1편
+이렇게 citations[i]에서 i값을 증가시키고 논문의 수를 감소시키면서 비교 했을 때 인용 횟수가 논문의 수 이상이 되었을 때의 논문의 수가 H-Index가 된다
+
+
+1. citatios 오름차순 정렬
+A = citations[i] : 인용 횟수
+B = citations.length()-i : citations[i]회 이상 인용된 논문의 수
+
+A>=B이 되었을 때의 논문의 수가 H-Index
+
+*/
+import java.util.*;
+class Solution {
+    public int solution(int[] citations) {
+        int answer = 0;
+        int citationSize = citations.length;
+        
+        Arrays.sort(citations);
+        
+        for(int i=0;i<citationSize;i++){
+            if(citations[i] >= citationSize-i){
+                answer = citationSize-i;
+                return answer;
+            }
+            continue;
+        }
+        return answer;
+    }
+}
