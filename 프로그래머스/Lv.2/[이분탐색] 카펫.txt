@@ -1,0 +1,42 @@
+/*
+2 -> 2*1   브라운격자수=(가로+2)*2+(세로)*2
+1 -> 1*1   브라운격자수=(가로+2)*2+(세로)*2
+24 -> 6*4  브라운격자수=(가로+2)*2+(세로)*2
+
+1. yellow 격자의 수 소인수 분해하여 가로가 더 큰 곱셈으로 만듬
+2. 약수개수 홀수개 -> 중간약수*중간약수
+   약수개수 짝수개 -> (list.size()/2) * (list.size()/2)-1
+2. (가로+2,세로+2) 반환.
+
+
+1. 노란색 격자 인수분해
+2. 인수분해해서 브라운 격자 수를 만족하면 반환, 아니면 다음 인수분해 짝 탐색
+*/
+import java.util.*;
+class Solution {
+    public int[] solution(int brown, int yellow) {
+        int[] answer = new int[2];
+        int x;//가로
+        int y;//세로
+        
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        for(int i=1;i<=yellow;i++){
+            if(yellow%i == 0){
+                list.add(i);
+            }
+        }
+        
+        for(int i=list.size()-1;i>=list.size()/2;i--){  //list.size()=8
+           x=list.get(i);
+           y=list.get(list.size()-1-i);
+            
+            if((x+2)*2+y*2 == brown){
+                answer[0] = x+2;
+                answer[1] = y+2;
+                break;
+            }
+         }
+        return answer;
+    }
+}
