@@ -1,0 +1,52 @@
+/*
+
+1. numbers를 한자리씩 찢어서 list에 저장.
+2. 소수(약수가 1과 자기자신 2개여야함) 판단
+//https://school.programmers.co.kr/learn/courses/30/lessons/42839
+import java.util.*;
+class Solution {
+    static boolean[] visited = new boolean[7];
+    static HashSet<Integer> set = new HashSet<>();
+    
+    public int solution(String numbers) {
+        int answer = 0;
+        dfs(numbers, "", 0);
+        
+        for(Integer num : set){     //num : 소수 판별해야 하는 숫자
+            if(isPrime(num)){
+                answer++;
+            }
+        }
+        
+        System.out.println(answer);
+        return answer;
+    }
+    
+    public static void dfs(String numbers, String s, int depth){
+        if(depth > numbers.length()){
+            return;
+        }
+        
+        for(int i=0;i<numbers.length();i++){
+            if(!visited[i]){
+                visited[i] = true;
+                set.add(Integer.parseInt(s+numbers.charAt(i)));
+                dfs(numbers, s+numbers.charAt(i), depth+1);
+                visited[i]=false;
+            }
+        }
+    }
+    
+    private boolean isPrime(int num){
+        if(num < 2){
+            return false;
+        } 
+        	// 에라토스테네스 체
+        for (int i = 2; i <= (int) Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
