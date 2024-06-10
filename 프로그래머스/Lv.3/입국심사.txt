@@ -1,0 +1,48 @@
+
+httpsschool.programmers.co.krlearncourses30lessons43238language=java
+times.length  심사관 수
+min = 가장 오래걸리는 심사시간  n, max = 가장 오래걸리는 심사시간  n
+
+1. mid를 구하기 위해 min과 max를 비교&반복 해가며 범위를 줄여간다.
+2. min  max 일 때 while문 종료 
+   max와 min의 범위 계속 줄여가면서 mid 값 수정.
+   해당 mid값으로 times 배열의 시간 값을 가진 심사관들이 몇명 심사할 수 있는지 count 한다.
+   
+  2.1. count = n 이여야 심사 가능
+  2.2. count  n 일 경우, 다 심사하는것 불가능 의미
+  
+  2.1을 만족할 경우, answer값 mid값으로 갱신시켜주며 마지막에 최솟값 반환
+
+
+import java.util.;
+class Solution {
+    public long solution(int n, int[] times) {    
+        long answer = 0;
+        Arrays.sort(times);
+        long left = 1;
+        long right = (long)times[times.length-1]n;
+        
+        while(true){
+            if(left  right){    while문 탈출 조건
+                break;
+            }
+            long mid = (left+right)2;
+            long sum = 0;
+            
+            for(int timetimes){
+                sum += (midtime);
+            }
+            
+             중요한건 심사를 받는데 걸리는 최솟값을 구해야 한다
+            
+            if(sum  n){    mid 시간안에 모든 사람 심사 X - Up(시간이 부족하므로 심사시간을 늘린다)
+                left = mid + 1;
+            }
+            else{           위의 mid 시간에 모든 사람을 심사 O - Down (더 낮은 시간으로 모든 사람 심사할 수 있는지 확인)
+                right = mid - 1;
+                answer = mid;
+            }
+        }
+        return answer;
+    }
+}
