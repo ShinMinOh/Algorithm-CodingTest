@@ -1,0 +1,31 @@
+/**
+https://leetcode.com/problems/removing-stars-from-a-string/
+
+별을 기준으로 왼쪽 알파벳이 삭제됨.
+따라서 s 문자열을 거꾸로 읽으면서, 만약 *을 만날경우 다음 숫자를 StringBuilder 객체에 붙이는것을 건너뛴다.
+
+1. for-loop을 s.length()-1 부터 시작
+2. *이 아닐경우 StringBuilder 객체에 붙인다.
+3. *일 경우 count를 +1하여 *이 아닌 알파벳이 나올때, count 수만큼 건너뛴다.
+4. '*'이 아니고, count != 0 일 경우, 알파벳을 이어 붙이지 않고, count를 1 낮춰준다.
+ */
+class Solution {
+    public String removeStars(String s) {
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+
+        for(int i=s.length()-1;i>=0;i--){
+            if(s.charAt(i) == '*'){ // '*'일 경우, count + 1을 해준다.
+                count++;
+            }
+            else if(count == 0){    // '*'와 붙어있는 알바벳이 아닐경우 가져와서 이어붙인다.
+                sb.append(s.charAt(i));
+            }
+            else{   // '*'다음에 나오는 알바벳의 경우 이어붙이지 않고, count를 1 낮춰준다.
+                count--;
+            }
+        }
+        return sb.reverse().toString();
+
+    }
+}
