@@ -1,0 +1,21 @@
+// https://leetcode.com/problems/two-sum/
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer,Integer> hashmap = new HashMap<>();
+        int diff;
+
+        for(int i=0;i<nums.length;i++){
+            diff = target-nums[i];
+
+            // 2. containsKey로 해당하는 Pair 있는지 확인
+            if(hashmap.containsKey(diff)){
+                return new int[]{i,hashmap.get(diff)};
+            }
+
+            // 1. 넣고
+            hashmap.put(nums[i],i);
+        }
+
+        return null;
+    }
+}
